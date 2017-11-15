@@ -1,8 +1,6 @@
 # Escape
 Yet Another Blogging Software.
 
-**Please note that Escape is now deprecated**. A new re-designed version of Escape is currently in progress.
-
 ### Requirements
 It's originally developed in an environment with PHP7&MariaDB. PHP5/Oracle MYSQL is not tested but should be OK.
 
