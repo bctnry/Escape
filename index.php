@@ -19,7 +19,6 @@ error_reporting(E_ALL & ~E_NOTICE);
     ?>
   </head>
   <body>
-test.
       <?php
       dispHeader();
       dispSectionDivider();
