@@ -1,4 +1,5 @@
 <?php
+require_once("./resource.php");
 require_once("./routine.php");
 require_once("./renderer.php");
 error_reporting(E_ALL & ~E_NOTICE);

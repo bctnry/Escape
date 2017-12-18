@@ -96,7 +96,7 @@ if(!((strcmp($_REQUEST["method"],"login")==0)||$_COOKIE["session_id"])) {
           echo 'CID' . $_REQUEST["id"] . ' deleted.<br />';
           echo '<a href="./admin.php?mode=manage&id=' . $blogpostid . '&submod=commentm">Back</a>';
       } else if(strcmp($_REQUEST["submod"],"edit")==0) {
-          modifyCommentByID(intval($_REQUEST["id"]),retrDatetime(),$_REQUEST["comment_name"],$_REQUEST["comment_body"]);
+          modifyCommentByID(intval($_REQUEST["id"]),date("Y-m-d H:i:s"),$_REQUEST["comment_name"],$_REQUEST["comment_body"]);
           echo 'CID' . $_REQUEST["id"] . ' modified.<br />';
           echo '<a href="./admin.php?mode=commentm&id=' . $_REQUEST["id"] . '">Back</a>';
       }
