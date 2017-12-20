@@ -133,6 +133,21 @@ if(!((strcmp($_REQUEST["method"],"login")==0)||$_COOKIE["session_id"])) {
         echo 'Click <a href="./admin.php?mode=userm">here</a> to go back.';
       }
     }
+  } else if(strcmp($_REQUEST["mode"],"backup")==0){
+    echo '<div><a href="./admin.php?mode=backup&action=import">Import</a> ';
+    echo '<a href="./admin.php?mode=backup&action=export">Export</a></div>';
+    if(isset($_REQUEST["action"])){
+      if(strcmp($_REQUEST["action"],"import")==0){
+        // disp. import form.
+        dispUploadForm("./admin.php","import_file",
+        '<input type="hidden" name="mode" value="backup" />
+         <input type="hidden" name="action" value="export" />
+         <input type="hidden" name="uploading" value="true" />'
+      );
+      } else if(strcmp($_REQUEST["action"],"export")==0){
+        echo 'Click <a href="./backup.php?mode=export">here</a> to get the XML backup.';        
+      }
+    }
   }
 }
 ?>

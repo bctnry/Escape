@@ -4,6 +4,7 @@ function dispManagementNavbar() {
   echo '<a href="./admin.php">New post</a> ';
   echo '<a href="./admin.php?mode=manage">Manage posts</a> ';
   echo '<a href="./admin.php?mode=userm">Manage users</a> ';
+  echo '<a href="./admin.php?mode=backup">Backup</a> ';
   echo '<a href="./admin.php?method=logout">Logout</a>';
 }
 

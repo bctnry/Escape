@@ -191,5 +191,14 @@ function dispUserEditingForm($id) {
     ';
 }
 
+function dispUploadForm($action,$name,$vars){
+    echo '
+    <form method="post" id="' . $name . '" action="' . $action . '" enctype="multipart/form-data">
+    ' . $vars . '
+    <input type="file" name="' . $name . '" accept=".xml" />
+    <input type="submit" value="Import" />
+    </form>
+    ';
+}
 
 ?>
