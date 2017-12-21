@@ -12,6 +12,15 @@ function insertComment_raw($conn,$blogpostid,$date,$name,$body) {
     $conn->close();
 }
 
+function insertComment_Exact($cid,$pid,$date,$name,$body){
+    $conn = startConn();
+    $cmd = mysqli_prepare($conn,"CALL INSERT_COMMENT_EXACT(?,?,?,?,?)");
+    $cmd->bind_param('iisss',$cid,$pid,$date,$name,$body);
+    $cmd->execute();
+    $cmd->close();
+    $conn->close();
+}
+
 function deleteCommentByID_raw($conn,$cid) {
     $query = mysqli_prepare($conn, "CALL DELETE_COMMENT(?)");
     $query->bind_param('i',$cid);
