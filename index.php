@@ -3,6 +3,15 @@
 require_once("./routine.php");
 require_once("./renderer.php");
 error_reporting(E_ALL & ~E_NOTICE);
+
+// check if config.php exists.
+if(!file_exists("./config.php")){
+    echo '
+    Seems that you haven\'t install Escape yet.
+    Click <a href="./install/index.php">here</a> to start the installation.
+    ';
+    die();
+}
 ?>
 <html>
   <head>
