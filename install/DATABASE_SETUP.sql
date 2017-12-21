@@ -117,3 +117,47 @@ CREATE PROCEDURE RETRIEVE_CURRENT_TEMPLATE()
     SELECT CurrentTemplate FROM Configurations;
 CREATE PROCEDURE RETRIEVE_CURRENT_BLOGNAME()
     SELECT Blogname FROM Configurations;
+
+
+CREATE PROCEDURE SET_BLOGNAME(IN newBlogName VARCHAR(128))
+    UPDATE Configurations SET Configurations.Blogname = newBlogName
+CREATE PROCEDURE SET_CURRENT_TEMPLATE(IN newTemplateName VARCHAR(64))
+    UPDATE Configurations SET Configurations.CurrentTemplate = newTemplateName
+
+
+DELIMITER //
+CREATE PROCEDURE INSERT_POST_EXACT(
+  IN newPostID INT, IN newPostDate DATETIME,
+  IN newPostUserID INT, IN newPostTitle VARCHAR(128),
+  IN newPostBody TEXT
+) BEGIN
+  DELETE FROM Blogposts WHERE BLogposts.ID = newPostID;
+  INSERT INTO Blogposts(ID,Date,UserID,Title,Body)
+    VALUES (newPostID,newPostDate,newPostUserID,newPostTitle,newPostBody);
+END
+//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE INSERT_COMMENT_EXACT(
+    IN newCommentID INT, IN newCommentPostID INT,
+    IN newCommentDate DATETIME, IN newCommentName VARCHAR(128),
+    IN newCommentBody TEXT
+) BEGIN
+  DELETE FROM Comments WHERE Comments.ID = newCommentID;
+  INSERT INTO Comments(ID,PostID,Date,Name,Body)
+    VALUES (newCommentID,newCommentPostID,newCommentDate,newCommentName,newCommentBody);
+END
+//
+DELIMITER ;
+
+
+DELIMITER //
+CREATE PROCEDURE INSERT_USER_EXACT(
+    IN userID INT, IN userName VARCHAR(64), IN userPassword VARCHAR(60)
+) BEGIN
+  DELETE FROM Users WHERE Users.ID = userID;
+  INSERT INTO Users(ID,Name,Password) VALUES (userID,userName,userPassword);
+END
+//
+DELIMITER ;

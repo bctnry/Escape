@@ -133,6 +133,8 @@ if(!((strcmp($_REQUEST["method"],"login")==0)||$_COOKIE["session_id"])) {
         echo 'Click <a href="./admin.php?mode=userm">here</a> to go back.';
       }
     }
+  } else if(strcmp($_REQUEST["mode"],"backup")==0){
+    echo 'Click <a href="./backup.php">here</a> to start the backup utility';
   }
 }
 ?>

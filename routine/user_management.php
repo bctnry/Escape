@@ -89,4 +89,13 @@ function checkSession_raw($conn,$userid,$hashval) {
     return $res;
 }
 
+function insertUser_Exact($id,$name,$password){
+    $conn = startConn();
+    $cmd = mysqli_prepare($conn,"CALL INSERT_USER_EXACT(?,?,?)");
+    $cmd->bind_param('iss',$id,$name,$password);
+    $cmd->execute();
+    $cmd->close();
+    $conn->close();
+}
+
 ?>

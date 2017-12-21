@@ -19,18 +19,21 @@ if(isset($_REQUEST["step"])){
           </p>
           ';
           echo '
+          <table>
           <form action="./index.php" method="POST">
           <input type="hidden" name="step" value="2" />
-          Database server address:<input type="text" name="database_server" /><br />
-          Database server port:<input type="text" name="database_port" /><br />
-          Database name:<input type="text" name="database_name" /><br />
-          Database username:<input type="text" name="database_username" /><br />
-          Database password:<input type="password" name="database_password" /><br />
-          Blog name:<input type="text" name="blog_name" /><br />
-          Blog admin username:<input type="text" name="admin_name" /><br />
-          Blog admin password:<input type="password" name="admin_password" /><br />
-          <input type="submit" value="Install" />
+          <tr><td>Database server address:</td>
+              <td><input type="text" name="database_server" /></td></tr>
+          <tr><td>Database server port:</td><td><input type="text" name="database_port" /></td><tr/>
+          <tr><td>Database name:</td><td><input type="text" name="database_name" /></td></tr>
+          <tr><td>Database username:</td><td><input type="text" name="database_username" /></td></tr>
+          <tr><td>Database password:</td><td><input type="password" name="database_password" /></td></tr>
+          <tr><td>Blog name:</td><td><input type="text" name="blog_name" /></td></tr>
+          <tr><td>Blog admin username:</td><td><input type="text" name="admin_name" /></td></tr>
+          <tr><td>Blog admin password:</td><td><input type="password" name="admin_password" /></td></tr>
+          <tr><td /><td><input type="submit" value="Install" /></td></tr>
           </form>
+          </table>
           ';
           break;
       }
@@ -222,6 +225,40 @@ if(isset($_REQUEST["step"])){
           $conn->query("
       CREATE PROCEDURE RETRIEVE_CURRENT_BLOGNAME()
           SELECT Blogname FROM Configurations;
+      ");
+      $conn->query("CREATE PROCEDURE SET_BLOGNAME(IN newBlogName VARCHAR(128))
+        UPDATE Configurations SET Configurations.Blogname = newBlogName");
+      $conn->query("CREATE PROCEDURE SET_CURRENT_TEMPLATE(IN newTemplateName VARCHAR(64))
+        UPDATE Configurations SET Configurations.CurrentTemplate = newTemplateName");
+      $conn->query("
+      CREATE PROCEDURE INSERT_POST_EXACT(
+        IN newPostID INT, IN newPostDate DATETIME,
+        IN newPostUserID INT, IN newPostTitle VARCHAR(128),
+        IN newPostBody TEXT
+      ) BEGIN
+        DELETE FROM Blogposts WHERE Blogposts.ID = newPostID;
+        INSERT INTO Blogposts(ID,Date,UserID,Title,Body)
+          VALUES (newPostID,newPostDate,newPostUserID,newPostTitle,newPostBody);
+      END
+      ");
+      $conn->query("
+      CREATE PROCEDURE INSERT_COMMENT_EXACT(
+        IN newCommentID INT, IN newCommentPostID INT,
+        IN newCommentDate DATETIME, IN newCommentName VARCHAR(128),
+        IN newCommentBody TEXT
+      ) BEGIN
+        DELETE FROM Comments WHERE Comments.ID = newCommentID;
+        INSERT INTO Comments(ID,PostID,Date,Name,Body)
+          VALUES (newCommentID,newCommentPostID,newCommentDate,newCommentName,newCommentBody);
+      END
+      ");
+      $conn->query("
+      CREATE PROCEDURE INSERT_USER_EXACT(
+        IN userID INT, IN userName VARCHAR(64), IN userPassword VARCHAR(60)
+      ) BEGIN
+        DELETE FROM Users WHERE Users.ID = userID;
+        INSERT INTO Users(ID,Name,Password) VALUES (userID,userName,userPassword);
+      END
       ");
       echo 'done.<br />';
       echo '
